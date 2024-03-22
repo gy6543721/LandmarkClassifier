@@ -50,8 +50,8 @@ class MainActivity : ComponentActivity() {
                         classifier = LandmarkClassifier(
                             context = applicationContext
                         ),
-                        onResults = {
-                            classifications = it
+                        onResults = { resultList ->
+                            classifications = resultList
                         }
                     )
                 }
@@ -75,9 +75,9 @@ class MainActivity : ComponentActivity() {
                             .fillMaxWidth()
                             .align(Alignment.TopCenter)
                     ) {
-                        classifications.forEach {
+                        classifications.forEach { classification ->
                             Text(
-                                text = it.name,
+                                text = classification.name,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .background(MaterialTheme.colorScheme.primaryContainer)
