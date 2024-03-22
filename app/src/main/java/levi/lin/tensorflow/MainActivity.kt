@@ -26,10 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import levi.lin.tensorflow.data.LandmarkClassifier
+import levi.lin.tensorflow.data.ImageClassifier
 import levi.lin.tensorflow.domain.Classification
 import levi.lin.tensorflow.ui.presentation.CameraPreview
-import levi.lin.tensorflow.ui.presentation.LandmarkImageAnalyzer
+import levi.lin.tensorflow.ui.presentation.ImageAnalyzer
 import levi.lin.tensorflow.ui.theme.LandmarkRecognitionTensorflowTheme
 
 class MainActivity : ComponentActivity() {
@@ -46,8 +46,8 @@ class MainActivity : ComponentActivity() {
                     mutableStateOf(emptyList<Classification>())
                 }
                 val analyzer = remember {
-                    LandmarkImageAnalyzer(
-                        classifier = LandmarkClassifier(
+                    ImageAnalyzer(
+                        classifier = ImageClassifier(
                             context = applicationContext
                         ),
                         onResults = { resultList ->
@@ -76,8 +76,10 @@ class MainActivity : ComponentActivity() {
                             .align(Alignment.TopCenter)
                     ) {
                         classifications.forEach { classification ->
+                            val percentage = "%.1f".format(classification.score * 100)
+
                             Text(
-                                text = classification.name,
+                                text = "${classification.name}\n($percentage%)",
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .background(MaterialTheme.colorScheme.primaryContainer)
